@@ -33,7 +33,7 @@ Agradecimento especial para os que contribuiram para este projeto acontecer.
     </td>
     <td align="center">
       <a href="#">
-        <img src="" width="100px;" alt="Foto de João Pedro"/><br>
+        <img src="![jp](https://github.com/user-attachments/assets/14cdaefb-7f40-49a9-8d6f-26b3857fed92)" width="100px;" alt="Foto de João Pedro"/><br>
         <sub>
           <b>João Pedro Gomes</b>
         </sub>
