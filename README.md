@@ -3,7 +3,7 @@
 <p align="center">
  <a href="#tech">Tecnologias</a> • 
  <a href="#colab">Colaboradores</a> •
- <a href="https://sites.google.com/d/15IcJs4e7vlrp8Ps8z03koREoM7PrZ-3h/p/1zr67In-LOZaGX0enF4LqhuruqwAHVQDz/edit">Google Sites</a> •
+ <a href="https://sites.google.com/d/15IcJs4e7vlrp8Ps8z03koREoM7PrZ-3h/p/1zr67In-LOZaGX0enF4LqhuruqwAHVQDz/edit">Google Sites</a> 
  
 </p>
 
