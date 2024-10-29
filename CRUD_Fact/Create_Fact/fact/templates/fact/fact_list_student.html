@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de FACTs Disponíveis</title>
+    <link rel="stylesheet" href="{% static 'fact/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Lista de FACTs Disponíveis</h2>
+        <a href="{% url 'home' %}" class="btn-back">Voltar para a Home</a>
+
+        <ul>
+            {% for fact in facts %}
+                <li>
+                    <h3>{{ fact.title }} - 
+                        {% if fact.is_draft %}Rascunho{% else %}Publicado{% endif %}
+                    </h3>
+                    <span>Data de Criação: {{ fact.created_at }}</span>
+                    
+                    <a href="{% url 'submit_fact_response' fact.id %}" class="btn-resolver">Resolver</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
