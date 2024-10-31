@@ -4,8 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do FACT</title>
+    <title>Detalhes do FACT: {{ fact.title }}</title>
     <link rel="stylesheet" href="{% static 'fact/style.css' %}">
+    <style>
+        .btn-back {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            margin: 20px;
+        }
+        .deadline-message {
+            color: #ff8c00; /* Cor para a mensagem do prazo */
+            margin: 10px 0;
+        }
+        .resolved-message {
+            color: green;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,6 +42,20 @@
         <h3>{{ fact.title }}</h3>
         <p><strong>Data de Criação:</strong> {{ fact.created_at|date:"d/m/Y H:i" }}</p>
         <p><strong>Status:</strong> {% if fact.is_draft %}Rascunho{% else %}Publicado{% endif %}</p>
+        <p><strong>Prazos:</strong>
+            {% if fact.deadline %}
+                <span class="deadline-message">{{ fact.deadline|date:"d/m/Y H:i" }}</span>
+            {% else %}
+                <span class="deadline-message">Não definido</span>
+            {% endif %}
+        </p>
+        <p><strong>Status de Resolução:</strong> 
+            {% if fact.responses.count %}
+                <span class="resolved-message">Resolvido</span>
+            {% else %}
+                Não Resolvido
+            {% endif %}
+        </p>
         <p><strong>Número de Grupos:</strong> {{ fact.num_groups }}</p>
 
         <h4>Grupos e Integrantes</h4>

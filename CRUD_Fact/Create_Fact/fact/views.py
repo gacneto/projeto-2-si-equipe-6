@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Fact, Group, Question, Response, Member
+from django.utils import timezone
 
 # View para a página inicial
 def home(request):
@@ -8,32 +9,32 @@ def home(request):
 # View para o professor criar um novo FACT
 def create_fact(request):
     if request.method == 'POST':
-        title = request.POST.get('title')  # Captura o título do FACT
-        num_groups = int(request.POST['num_groups'])  # Captura o número de grupos
+        title = request.POST.get('title')
+        num_groups = int(request.POST['num_groups'])
+        deadline = request.POST.get('deadline')  # Captura o prazo
 
-        # Cria o FACT como rascunho com o título e o número de grupos
-        fact = Fact.objects.create(title=title, num_groups=num_groups, is_draft=True)
+        # Cria o FACT
+        fact = Fact.objects.create(title=title, num_groups=num_groups, is_draft=True, deadline=deadline)
 
         for i in range(num_groups):
-            num_members = int(request.POST.get(f'members_{i}', 0))  # Número de integrantes do grupo
-            group_name = f'Grupo {i + 1}'  # Nome do grupo
-            group = Group.objects.create(fact=fact, name=group_name)  # Cria o grupo
+            num_members = int(request.POST.get(f'members_{i}', 0))
+            group_name = f'Grupo {i + 1}'
+            group = Group.objects.create(fact=fact, name=group_name)
 
-            # Cria os integrantes
             for j in range(num_members):
-                member_name = request.POST.get(f'group_{i}_member_{j}')  # Nome do integrante
-                Member.objects.create(group=group, name=member_name)  # Cria o membro
+                member_name = request.POST.get(f'group_{i}_member_{j}')
+                Member.objects.create(group=group, name=member_name)
 
-        return redirect('fact_list')  # Redireciona para a lista de FACTs
+        return redirect('fact_list')
 
     return render(request, 'fact/create_fact.html')
-
 
 # View para listar FACTs (Professor)
 def fact_list(request):
     facts = Fact.objects.all()
     return render(request, 'fact/fact_list.html', {'facts': facts})
 
+# Detalhes do FACT
 def fact_detail(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
     return render(request, 'fact/fact_detail.html', {'fact': fact})
@@ -48,7 +49,7 @@ def view_responses(request, fact_id):
         'responses': responses
     })
 
-# View para publicar e deletar FACT
+# Publicar e deletar FACT
 def post_fact(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
     fact.is_draft = False
@@ -60,24 +61,42 @@ def delete_fact(request, fact_id):
     fact.delete()
     return redirect('fact_list')
 
-# View para listar FACTs disponíveis para o estudante
+# Listar FACTs disponíveis para o estudante
 def fact_list_student(request):
     facts = Fact.objects.filter(is_draft=False)  # Apenas FACTs publicados
-    return render(request, 'fact/fact_list_student.html', {'facts': facts})
+    return render(request, 'fact/fact_list_student.html', {
+        'facts': facts,
+        'now': timezone.now()  # Passando a data atual
+    })
 
-# View para resolver um FACT
+# Resolver um FACT
 def resolve_fact(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
+
+    # Verifica se o prazo expirou
+    if fact.deadline and fact.deadline < timezone.now():
+        return render(request, 'fact/submit_fact_response.html', {
+            'fact': fact,
+            'expired': True  # Variável para indicar que o prazo expirou
+        })
+
     predefined_questions = Question.objects.all()  # Supondo que todas as perguntas sejam utilizadas
     return render(request, 'fact/submit_fact_response.html', {
         'fact': fact,
         'predefined_questions': predefined_questions,
     })
 
-# View para o estudante enviar respostas do FACT
+# Enviar respostas do FACT
 def submit_fact_response(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
-    
+
+    # Verifica se o prazo expirou
+    if fact.deadline and fact.deadline < timezone.now():
+        return render(request, 'fact/submit_fact_response.html', {
+            'fact': fact,
+            'expired': True  # Variável para indicar que o prazo expirou
+        })
+
     # Defina a variável de mensagem de erro no início
     error_message = None
 

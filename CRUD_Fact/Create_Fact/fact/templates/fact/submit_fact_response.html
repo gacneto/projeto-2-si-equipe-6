@@ -31,6 +31,10 @@
             font-weight: bold;
             margin: 10px 0;
         }
+        .deadline-message {
+            color: #ff8c00; /* Cor para a mensagem do prazo */
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -38,9 +42,19 @@
         <h2>Resolução de FACT: {{ fact.title }}</h2>
         <a href="{% url 'fact_list_student' %}" class="btn-back">Voltar para a Lista de FACTs</a>
 
-        {% if fact.is_resolved %}
+        {% if expired %}
+            <p class="error-message">Este FACT está expirado. Você não pode mais avaliá-lo.</p>
+        {% elif fact.is_resolved %}
             <p class="resolved-message">O FACT foi resolvido. Você não pode mais avaliá-lo.</p>
         {% else %}
+            <p class="deadline-message">Prazo: 
+                {% if fact.deadline %}
+                    {{ fact.deadline|date:"d/m/Y H:i" }}
+                {% else %}
+                    Não definido
+                {% endif %}
+            </p>
+
             {% if error_message %}
                 <p class="error-message">{{ error_message }}</p>
             {% endif %}

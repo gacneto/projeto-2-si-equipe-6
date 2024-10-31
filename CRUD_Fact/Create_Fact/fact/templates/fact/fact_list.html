@@ -24,6 +24,13 @@
                         {% endif %}
                     {% endif %}
                     <span> - Data de Criação: {{ fact.created_at|date:"d/m/Y H:i" }}</span>
+                    <span> - Prazo: 
+                        {% if fact.deadline %}
+                            {{ fact.deadline|date:"d/m/Y H:i" }}
+                        {% else %}
+                            Não definido
+                        {% endif %}
+                    </span>
                     <a href="{% url 'fact_detail' fact.id %}">Visualizar</a> |
                     <a href="{% url 'post_fact' fact.id %}">Postar</a> |
                     <a href="{% url 'delete_fact' fact.id %}">Excluir</a> |
