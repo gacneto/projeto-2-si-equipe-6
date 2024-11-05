@@ -1,0 +1,107 @@
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5DC;
+    padding: 20px;
+}
+
+.navbar {
+    background-color: #ff7300;
+}
+
+.navbar .navbar-brand {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+/* Botões personalizados para combinar com o esquema de cores */
+.btn-primary {
+    background-color: #ffa442;
+    border-color: #ffa442;
+}
+
+.btn-primary:hover {
+    background-color: #ff7913;
+    border-color: #ff7913;
+}
+
+.btn-secondary {
+    background-color: #000000;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+/* Estilo do container principal para centralizar */
+.container {
+    background-color: #F5F5E1;
+    padding: 100px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    margin-bottom: 10px;  /* Espaçamento entre os campos */
+}
+
+
+/* Estilo dos botões */
+button, .btn {
+    margin-top: 8px;  /* Espaçamento acima do botão */
+}
+
+.form-control-sm {
+    background-color: #ff79131f;
+    border-color: #000000;
+    margin-top: 8px;
+}
+
+/* Títulos e parágrafos */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Formulário Cadastro */
+.form-group-cadastro {
+    margin-bottom: 10px;  /* Espaçamento entre os campos */
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-left: 500px;
+}
+
+.botao-enviar{
+    align-items: center;
+
+}

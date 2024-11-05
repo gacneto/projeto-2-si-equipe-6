@@ -1,0 +1,32 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<div class="container">
+    <h1>Login - Aluno</h1>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        <div class="form-group">
+        {% csrf_token %}
+            <div>
+                Email <input name="email" class="form-control-sm" type="email" id="email" required>
+            </div>
+            <div>
+                Senha <input name="senha" class="form-control-sm" type="password" id="senha" required>
+            </div>
+        
+            <button class="form-control-sm btn-primary" type="submit">Login</button>
+        </div>
+    </form>
+
+    <div>
+        <a href="{% url 'menu' %}" class="btn btn-secondary">Voltar ao Menu</a>
+    </div>
+</div>
+{% endblock %}
