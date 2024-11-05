@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visão Geral da Turma - {{ course }}</title>
+</head>
+<body>
+    <h1>Visão Geral da Turma - {{ course }}</h1>
+    <h2>Média por Critério</h2>
+    <img src="data:image/png;base64,{{ graphic }}" alt="Gráfico de Médias por Critério">
+    <a href="{% url 'course_detail' course.id %}">Voltar</a>
+</body>
+</html>

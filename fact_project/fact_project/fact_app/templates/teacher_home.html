@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo, Professor!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: beige;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #ff6404;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 120px;
+            width: auto;
+            margin-right: 40px;
+        }
+
+        h1 {
+            color: black;
+            margin-top: 20px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid ;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            background-color: #ff6404;
+        }
+
+        a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        .logout {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+            color: #666;
+            margin-top: auto;
+            width: 100%;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+
+    <h1>Bem-vindo, Professor!</h1>
+    <h2>Turmas:</h2>
+    <ul>
+        {% for course in courses %}
+            <li><a href="{% url 'course_detail' course.id %}">{{ course }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'custom_logout' %}" class="logout">Sair</a>
+
+    <footer>
+        <p>&copy; <span id="year"></span>2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

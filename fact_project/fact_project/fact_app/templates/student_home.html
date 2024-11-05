@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InFact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+      body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: beige;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #ff6404;
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 120px;
+            width: auto;
+            margin-right: 40px;
+        }
+
+        h1 {
+            margin: 0;
+            color: white;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .options-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .button-frame {
+            border: 2px solid rgb(181, 181, 181);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 600px;
+            background-color: white;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #ff6404;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+            font-size: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: orange;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 20px 0;
+            background-color: #f1f1f1;
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: #666;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+
+    <nav>
+        <div class="options-title">Bem-vindo à Página do aluno, escolha uma das seguintes opções:</div>
+        <div class="button-frame">
+            <div class="button-container">
+                <div class="button-row">
+                    <a href="{% url 'cancel_fact' %}" class="button">Cancelar FACT</a>
+                    <a href="{% url 'past_facts' %}" class="button">FACTs Passados</a>
+                </div>
+                <div class="button-row">
+                    <a href="#" class="button">Preencher FACT</a>
+                    <a href="{% url 'custom_logout' %}" class="button">Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <footer class="footer">
+        <div class="copyright">© 2024 InFact. Todos os direitos reservados.</div>
+    </footer>
+</body>
+</html>
+    
