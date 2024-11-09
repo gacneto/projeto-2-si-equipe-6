@@ -1,0 +1,96 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+
+<div
+  class="container-login-docente"
+  style="
+    background-color: rgb(248, 248, 248);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 775px;
+    border-radius: 10px;
+    padding: 70px;
+    justify-content: center;
+  "
+>
+  <h1 style="text-align: center; font-family: Arial, Helvetica, sans-serif">
+    Login - Docente
+  </h1>
+
+  {% if messages %}
+  <div>
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <form
+    method="POST"
+    action="{% url 'login_docente' %}"
+    style="display: flex; justify-content: center; align-items: center"
+  >
+    <div
+      class="form-group"
+      style="display: flex; flex-direction: column; width: 500px"
+    >
+      {% csrf_token %}
+      <input
+        name="email"
+        class="form-control-sm"
+        type="email"
+        id="email"
+        required
+        style="
+          background-color: white;
+          border-color: black;
+          margin-bottom: 10px;
+          padding: 10px;
+        "
+        placeholder="Digite seu email (@cesar.school)"
+      />
+
+      <input
+        name="password"
+        class="form-control-sm"
+        type="password"
+        id="password"
+        placeholder="Digite sua Senha"
+        required
+        style="
+          background-color: white;
+          border-color: black;
+          margin-bottom: 10px;
+          padding: 10px;
+        "
+      />
+      <div style="display: flex; justify-content: center; align-items: center">
+        <button
+          class="form-control-sm btn-primary"
+          type="submit"
+          style="
+            border-color: black;
+            background-color: rgb(248, 115, 27);
+            width: 150px;
+            text-align: center;
+            justify-content: center;
+            padding: 10px;
+          "
+        >
+          Entrar
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div style="display: flex; justify-content: center; align-items: center">
+    <a
+      href="{% url 'escolha_usuario' %}"
+      class="btn btn-secondary"
+      style="width: 150px; text-align: center"
+      >Voltar ao início</a
+    >
+  </div>
+</div>
+
+{% endblock %}
+
