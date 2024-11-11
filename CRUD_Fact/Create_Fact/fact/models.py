@@ -37,6 +37,7 @@ class Response(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     member = models.ForeignKey(Member, null=True, on_delete=models.CASCADE, related_name='responses')
     score = models.IntegerField(choices=[(i, str(i)) for i in range(0, 11)])  # Pontuação de 0 a 10
+    comment = models.TextField(blank=True, null=True)  # Novo campo para comentário
 
     def __str__(self):
         member_name = self.member.name if self.member else "Nenhum membro"

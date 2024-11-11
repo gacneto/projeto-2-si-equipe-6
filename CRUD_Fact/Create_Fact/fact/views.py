@@ -86,7 +86,6 @@ def resolve_fact(request, fact_id):
         'predefined_questions': predefined_questions,
     })
 
-# Enviar respostas do FACT
 def submit_fact_response(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
 
@@ -97,7 +96,7 @@ def submit_fact_response(request, fact_id):
             'expired': True  # Variável para indicar que o prazo expirou
         })
 
-    # Defina a variável de mensagem de erro no início
+    # Mensagem de erro inicial
     error_message = None
 
     # Obtenha as perguntas pré-definidas do banco de dados
@@ -112,49 +111,61 @@ def submit_fact_response(request, fact_id):
         ]
     )
 
+    # Obtenha grupos e membros
     groups = fact.groups.all()
     members = {group.id: list(group.members.all()) for group in groups}
     selected_group_id = request.POST.get('selected_group')
     selected_group_members = members.get(int(selected_group_id), []) if selected_group_id else []
 
+    # Obtenha IDs dos membros já avaliados para este FACT
+    evaluated_member_ids = Response.objects.filter(fact=fact).values_list('member_id', flat=True)
+
     if request.method == "POST":
         selected_member_id = request.POST.get('selected_member')
+        comment = request.POST.get('comment')  # Obtém o comentário do formulário
 
         if selected_group_id and selected_member_id:
             selected_member = get_object_or_404(Member, id=selected_member_id)
 
-            all_questions_answered = True
-            responses_to_save = []
-
-            for question in predefined_questions:
-                score = request.POST.get(f"score_{question.id}")
-                if score is None:
-                    all_questions_answered = False
-                    break
-                responses_to_save.append(
-                    Response(
-                        fact=fact,
-                        question=question,
-                        group=Group.objects.get(id=selected_group_id),
-                        member=selected_member,
-                        score=int(score)
-                    )
-                )
-
-            if all_questions_answered:
-                Response.objects.bulk_create(responses_to_save)
-
-                # Verifica se todos os membros foram avaliados
-                total_members = sum(len(group.members.all()) for group in groups)
-                evaluated_members = Response.objects.filter(fact=fact).values('member').distinct().count()
-
-                if evaluated_members == total_members:
-                    fact.is_resolved = True
-                    fact.save()
-
-                return redirect('fact_list_student')
+            # Verifique se o membro já foi avaliado
+            if int(selected_member_id) in evaluated_member_ids:
+                error_message = "Este integrante já foi avaliado."
             else:
-                error_message = "Por favor, responda todas as perguntas antes de enviar."
+                all_questions_answered = True
+                responses_to_save = []
+
+                # Processa as respostas para cada pergunta
+                for question in predefined_questions:
+                    score = request.POST.get(f"score_{question.id}")
+                    if score is None:
+                        all_questions_answered = False
+                        break
+                    responses_to_save.append(
+                        Response(
+                            fact=fact,
+                            question=question,
+                            group=Group.objects.get(id=selected_group_id),
+                            member=selected_member,
+                            score=int(score),
+                            comment=comment  # Salva o comentário no Response
+                        )
+                    )
+
+                # Se todas as perguntas foram respondidas, salva as respostas
+                if all_questions_answered:
+                    Response.objects.bulk_create(responses_to_save)
+
+                    # Verifica se todos os membros foram avaliados
+                    total_members = sum(len(group.members.all()) for group in groups)
+                    evaluated_members = Response.objects.filter(fact=fact).values('member').distinct().count()
+
+                    if evaluated_members == total_members:
+                        fact.is_resolved = True
+                        fact.save()
+
+                    return redirect('fact_list_student')
+                else:
+                    error_message = "Por favor, responda todas as perguntas antes de enviar."
 
     return render(request, 'fact/submit_fact_response.html', {
         'fact': fact,
@@ -163,5 +174,6 @@ def submit_fact_response(request, fact_id):
         'members': members,
         'selected_group_members': selected_group_members,
         'selected_group_id': selected_group_id,
-        'error_message': error_message
+        'error_message': error_message,
+        'evaluated_member_ids': evaluated_member_ids  # Passa os IDs dos membros já avaliados
     })

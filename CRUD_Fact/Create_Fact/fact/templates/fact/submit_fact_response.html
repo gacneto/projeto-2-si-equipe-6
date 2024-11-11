@@ -32,7 +32,7 @@
             margin: 10px 0;
         }
         .deadline-message {
-            color: #ff8c00; /* Cor para a mensagem do prazo */
+            color: #ff8c00;
             margin: 10px 0;
         }
     </style>
@@ -81,9 +81,14 @@
                 <select name="selected_member" id="selected_member" required>
                     <option value="">--- Selecione um integrante ---</option>
                     {% for member in selected_group_members %}
-                        <option value="{{ member.id }}">{{ member.name }}</option>
+                        <option value="{{ member.id }}" {% if member.id in evaluated_member_ids %}disabled{% endif %}>
+                            {{ member.name }}
+                        </option>
                     {% endfor %}
                 </select>
+                <hr>
+                <label for="comment">Comentário para o Integrante:</label>
+                <textarea name="comment" id="comment" rows="4" placeholder="Adicione seu comentário aqui..."></textarea>
                 <button type="submit">Enviar Respostas</button>
             </form>
         {% endif %}

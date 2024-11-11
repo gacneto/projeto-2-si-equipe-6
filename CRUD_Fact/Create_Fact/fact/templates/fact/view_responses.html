@@ -18,6 +18,7 @@
                     <th>Membro</th>
                     <th>Pergunta</th>
                     <th>Resposta</th>
+                    <th>Comentário</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +27,14 @@
                         <td>{{ response.member.name }}</td>
                         <td>{{ response.question.text }}</td>
                         <td>{{ response.score }}</td>
+                        <td>
+                            {% if forloop.first or response.member.id != previous_member_id %}
+                                {{ response.comment|default:"Sem comentário" }}
+                            {% endif %}
+                        </td>
                     </tr>
+                    {% with previous_member_id=response.member.id %}
+                    {% endwith %}
                 {% endfor %}
             </tbody>
         </table>
