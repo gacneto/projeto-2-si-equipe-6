@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar FACT</title>
+    <link rel="stylesheet" href="{% static 'fact/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Criar FACT</h2>
+        <a href="{% url 'home' %}" class="btn-back">Voltar para a Home</a>
+        <div class="spacer"></div> <!-- Adicionando um espaçador -->
+        <form method="post">
+            {% csrf_token %}
+            <label for="title">Título do FACT:</label>
+            <input type="text" id="title" name="title" required> <!-- Campo para o título -->
+            
+            <label for="num_groups">Número de grupos:</label>
+            <input type="number" id="num_groups" name="num_groups" required min="1" onchange="updateGroupInputs(this.value)">
+
+            <label for="deadline">Prazo para o FACT:</label>
+            <input type="datetime-local" id="deadline" name="deadline">
+
+            <div id="groups">
+                <!-- Campos para os nomes dos grupos e integrantes serão gerados aqui -->
+            </div>
+
+            <button type="submit">Salvar FACT</button>
+        </form>
+    </div>
+
+    <script>
+        function updateGroupInputs(num) {
+            const groupsDiv = document.getElementById('groups');
+            groupsDiv.innerHTML = ''; // Limpa os campos existentes
+
+            for (let i = 0; i < num; i++) {
+                // Campo para o número de integrantes do grupo
+                const memberCountLabel = document.createElement('label');
+                memberCountLabel.innerText = `Número de integrantes do Grupo ${i + 1}:`;
+                const memberCountInput = document.createElement('input');
+                memberCountInput.type = 'number';
+                memberCountInput.name = `members_${i}`;
+                memberCountInput.required = true;
+                memberCountInput.min = 1; // Definindo o mínimo como 1
+
+                // Adiciona os campos do número de integrantes no DOM
+                groupsDiv.appendChild(memberCountLabel);
+                groupsDiv.appendChild(memberCountInput);
+
+                // Cria um contêiner para os nomes dos integrantes
+                const memberDiv = document.createElement('div');
+                memberDiv.id = `group_${i}_members`;
+                groupsDiv.appendChild(memberDiv);
+
+                // Adiciona o evento para gerar os campos dos integrantes ao mudar o número
+                memberCountInput.onchange = function() {
+                    memberDiv.innerHTML = ''; // Limpa os campos existentes
+
+                    // Gera os campos para os integrantes
+                    for (let j = 0; j < memberCountInput.value; j++) {
+                        const memberLabel = document.createElement('label');
+                        memberLabel.innerText = `Nome do Integrante ${j + 1} do Grupo ${i + 1}:`;
+                        const memberInput = document.createElement('input');
+                        memberInput.type = 'text';
+                        memberInput.name = `group_${i}_member_${j}`; // Nome para capturar o nome do integrante
+                        memberInput.required = true;
+
+                        memberDiv.appendChild(memberLabel);
+                        memberDiv.appendChild(memberInput);
+                    }
+                };
+            }
+        }
+    </script>
+</body>
+</html>
