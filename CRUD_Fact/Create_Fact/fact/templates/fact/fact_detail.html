@@ -23,7 +23,7 @@
             margin: 20px;
         }
         .deadline-message {
-            color: #ff8c00; /* Cor para a mensagem do prazo */
+            color: #ff8c00; 
             margin: 10px 0;
         }
         .resolved-message {
@@ -37,7 +37,7 @@
     <div class="container">
         <h2>Detalhes do FACT</h2>
         <a href="{% url 'fact_list' %}" class="btn-back">Voltar para a Lista de FACTs</a>
-        <div class="spacer"></div> <!-- Adicionando um espaçador -->
+        <div class="spacer"></div> 
 
         <h3>{{ fact.title }}</h3>
         <p><strong>Data de Criação:</strong> {{ fact.created_at|date:"d/m/Y H:i" }}</p>

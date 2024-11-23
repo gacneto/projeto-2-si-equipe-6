@@ -6,10 +6,11 @@ class Fact(models.Model):
     num_groups = models.PositiveIntegerField()
     is_resolved = models.BooleanField(default=False)  
     created_at = models.DateTimeField(auto_now_add=True)
-    deadline = models.DateTimeField(null=True, blank=True)  # Campo de prazo para expiração do FACT
+    deadline = models.DateTimeField(null=True, blank=True)  
 
     def __str__(self):
         return self.title
+
 
 class Group(models.Model):
     fact = models.ForeignKey(Fact, on_delete=models.CASCADE, related_name="groups")
@@ -18,6 +19,7 @@ class Group(models.Model):
     def __str__(self):
         return f"{self.fact.title} - {self.name}"
 
+
 class Member(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='members')  
     name = models.CharField(max_length=50)
@@ -25,11 +27,13 @@ class Member(models.Model):
     def __str__(self):
         return f"{self.group.name} - {self.name}"
 
+
 class Question(models.Model):
     text = models.CharField(max_length=200)
 
     def __str__(self):
         return self.text
+
 
 class Response(models.Model):
     fact = models.ForeignKey(Fact, on_delete=models.CASCADE, related_name="responses")
@@ -40,5 +44,7 @@ class Response(models.Model):
     comment = models.TextField(blank=True, null=True)  # Novo campo para comentário
 
     def __str__(self):
+        group_name = self.group.name if self.group else "Nenhum grupo"
+        question_text = self.question.text if self.question else "Sem pergunta"
         member_name = self.member.name if self.member else "Nenhum membro"
-        return f"{self.group.name} - {self.question.text}: {self.score} (Membro: {member_name})"
+        return f"{group_name} - {question_text}: {self.score} (Membro: {member_name})"

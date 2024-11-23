@@ -36,6 +36,38 @@
             margin: 10px 0;
         }
     </style>
+    <script>
+        function saveFormProgress() {
+            const formFields = document.querySelectorAll('input, select, textarea');
+            formFields.forEach(field => {
+                if (field.name) {
+                    localStorage.setItem(`fact_form_${field.name}`, field.value);
+                }
+            });
+        }
+
+        function restoreFormProgress() {
+            const formFields = document.querySelectorAll('input, select, textarea');
+            formFields.forEach(field => {
+                const savedValue = localStorage.getItem(`fact_form_${field.name}`);
+                if (savedValue !== null) {
+                    field.value = savedValue;
+                }
+            });
+        }
+
+        function clearFormProgress() {
+            const formFields = document.querySelectorAll('input, select, textarea');
+            formFields.forEach(field => {
+                if (field.name) {
+                    localStorage.removeItem(`fact_form_${field.name}`);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', restoreFormProgress);
+        document.addEventListener('input', saveFormProgress);
+    </script>
 </head>
 <body>
     <div class="container">
@@ -59,7 +91,7 @@
                 <p class="error-message">{{ error_message }}</p>
             {% endif %}
 
-            <form method="post">
+            <form method="post" onsubmit="clearFormProgress()">
                 {% csrf_token %}
                 <label for="selected_group">Selecione seu Grupo:</label>
                 <select name="selected_group" id="selected_group" required onchange="this.form.submit()">
