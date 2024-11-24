@@ -11,4 +11,5 @@ urlpatterns = [
     path('resolve/<int:fact_id>/', views.resolve_fact, name='resolve_fact'),  
     path('detail/<int:fact_id>/', views.fact_detail, name='fact_detail'),  
     path('responses/<int:fact_id>/', views.view_responses, name='view_responses'),
+    path('grades/<int:fact_id>/', views.view_grades, name='view_grades'),
 ]

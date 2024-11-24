@@ -1,0 +1,26 @@
+
+{% block content %}
+<h2>Notas dos Alunos - {{ fact.title }}</h2>
+
+{% if student_grades %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome do Aluno</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member, grade in student_grades %}
+                <tr>
+                    <td>{{ member.name }}</td>
+                    <td>{{ grade|floatformat:2 }}</td>  <!-- Formatação para 2 casas decimais -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>As notas ainda não estão disponíveis ou o prazo não expirou.</p>
+{% endif %}
+<a href="{% url 'home' %}" class="btn-back">Voltar para a Home</a>
+{% endblock %}

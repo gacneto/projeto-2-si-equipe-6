@@ -3,7 +3,8 @@ from .models import Fact, Group, Question, Response, Member
 from django.utils import timezone
 
 def home(request):
-    return render(request, 'fact/home.html')
+    facts = Fact.objects.all()  
+    return render(request, 'fact/home.html', {'facts': facts})
 
 def create_fact(request):
     if request.method == 'POST':
@@ -140,3 +141,41 @@ def submit_fact_response(request, fact_id):
         'error_message': error_message,
         'evaluated_member_ids': evaluated_member_ids
     })
+    
+from django.shortcuts import render
+from .models import Fact, Response
+from datetime import datetime
+
+def calculate_grades(fact):
+    student_grades = []
+
+    for group in fact.groups.all():
+        for member in group.members.all():
+
+            responses = Response.objects.filter(member=member, fact=fact)
+
+            total_score = sum([response.score for response in responses])
+            
+            grade = total_score / (len(group.members.all()) - 1) if len(group.members.all()) > 1 else total_score
+            student_grades.append((member, grade))  
+            
+    return student_grades
+
+def view_grades(request, fact_id):
+    fact = get_object_or_404(Fact, id=fact_id)
+    current_time = timezone.now()
+    
+    student_grades = []
+
+    
+    if fact.deadline and fact.deadline < current_time:
+        if fact.is_resolved:
+            student_grades = calculate_grades(fact)  
+    else:
+        student_grades = []  
+
+    return render(request, 'fact/view_grades.html', {
+        'fact': fact,
+        'student_grades': student_grades,
+    })
+

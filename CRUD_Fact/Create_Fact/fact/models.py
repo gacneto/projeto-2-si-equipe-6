@@ -1,12 +1,12 @@
 from django.db import models
 
 class Fact(models.Model):
-    title = models.CharField(max_length=200, default="Novo FACT")
+    title = models.CharField(max_length=200)
+    deadline = models.DateTimeField()
     is_draft = models.BooleanField(default=True)
     num_groups = models.PositiveIntegerField()
     is_resolved = models.BooleanField(default=False)  
     created_at = models.DateTimeField(auto_now_add=True)
-    deadline = models.DateTimeField(null=True, blank=True)  
 
     def __str__(self):
         return self.title

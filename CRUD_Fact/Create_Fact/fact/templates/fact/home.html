@@ -16,6 +16,12 @@
             <li><a href="{% url 'fact_list' %}">Lista de FACTs (Professor)</a></li>
             <li><a href="{% url 'fact_list_student' %}">Resolução de FACT (Estudante)</a></li>
         </ul>
+        {% for fact in facts %}
+            <h3>{{ fact.title }}</h3>
+            <p>{{ fact.deadline }}</p>
+            <a href="{% url 'view_grades' fact.id %}">Ver Notas dos Alunos</a>  
+        {% endfor %}
+        
     </div>
 </body>
 </html>
