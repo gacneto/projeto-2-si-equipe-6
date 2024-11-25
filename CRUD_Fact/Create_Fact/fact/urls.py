@@ -12,4 +12,6 @@ urlpatterns = [
     path('detail/<int:fact_id>/', views.fact_detail, name='fact_detail'),  
     path('responses/<int:fact_id>/', views.view_responses, name='view_responses'),
     path('grades/<int:fact_id>/', views.view_grades, name='view_grades'),
+    path('fact/list_grades/', views.fact_list_grades, name='fact_list_grades'),
+    path('fact/grades/<int:fact_id>/', views.view_grades, name='view_grades'),
 ]

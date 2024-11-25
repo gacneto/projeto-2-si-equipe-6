@@ -35,6 +35,7 @@
                     <a href="{% url 'post_fact' fact.id %}">Postar</a> |
                     <a href="{% url 'delete_fact' fact.id %}">Excluir</a> |
                     <a href="{% url 'view_responses' fact.id %}">Visualizar Respostas</a>
+                    <a href="{% url 'view_grades' fact.id %}">Ver Notas dos Alunos</a>
                 </li>
             {% endfor %}
         </ul>

@@ -32,6 +32,10 @@ def fact_list(request):
     facts = Fact.objects.all()
     return render(request, 'fact/fact_list.html', {'facts': facts})
 
+def fact_list_grades(request):
+    facts = Fact.objects.all()
+    return render(request, 'fact/fact_list_grades.html', {'facts': facts})
+
 def fact_detail(request, fact_id):
     fact = get_object_or_404(Fact, id=fact_id)
     return render(request, 'fact/fact_detail.html', {'fact': fact})
