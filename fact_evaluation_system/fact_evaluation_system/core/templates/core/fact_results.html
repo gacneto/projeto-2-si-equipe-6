@@ -1,0 +1,126 @@
+<!-- core/templates/core/fact_results.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados do FACT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #FF6002;
+            margin-bottom: 30px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botão Voltar */
+        .back-button {
+            background-color: #FF6002;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            color: #FDFCF3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: none;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: #000;
+            font-size: 14px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .back-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Resultados do FACT</h1>
+            <img src="data:image/png;base64,{{ data }}" alt="Gráfico de Resultados">
+            <a href="{% url 'professor_dashboard' %}" class="back-button">Voltar</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

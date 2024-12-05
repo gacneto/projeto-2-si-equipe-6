@@ -1,0 +1,268 @@
+<!-- core/templates/core/respond_fact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Responder FACT - {{ fact.description }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            /* Centraliza o conteúdo verticalmente */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px; /* Ajustado para acomodar a tabela */
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 40px;
+            overflow-x: auto; /* Permite rolagem horizontal se necessário */
+            box-sizing: border-box; /* Inclui padding no cálculo da largura */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #FF6002;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Mensagens */
+        .messages {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .messages .success {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+
+        .messages .error {
+            background-color: #F8D7DA;
+            color: #721C24;
+        }
+
+        /* Estilo da Tabela */
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            table-layout: fixed; /* Define largura fixa para as colunas */
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            word-wrap: break-word; /* Quebra palavras longas */
+            white-space: normal; /* Permite quebra de linha */
+        }
+
+        table th {
+            background-color: #FF6002;
+            color: #FFFFFF;
+        }
+
+        /* Ajuste das larguras das colunas */
+        table th:nth-child(1), /* Coluna "Aluno" */
+        table td:nth-child(1) {
+            width: 15%; /* 15% da largura total */
+        }
+
+        table th:nth-last-child(1), /* Coluna "Comentário" */
+        table td:nth-last-child(1) {
+            width: 25%; /* 25% da largura total */
+        }
+
+        table th:not(:first-child):not(:last-child), /* Colunas dos critérios */
+        table td:not(:first-child):not(:last-child) {
+            width: 10%; /* Divide igualmente o restante da largura entre os critérios */
+        }
+
+        /* Ajuste dos campos de entrada */
+        input[type="number"] {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px; /* Ajustado para um tamanho adequado */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical; /* Permite redimensionar verticalmente */
+            box-sizing: border-box;
+        }
+
+        button[type="submit"],
+        .back-button {
+            background-color: #FF6002;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 10px;
+            width: 200px;
+            margin: 10px 5px 0 5px;
+        }
+
+        button[type="submit"]:hover,
+        button[type="submit"]:active,
+        .back-button:hover,
+        .back-button:active {
+            color: #FDFCF3;
+        }
+
+        /* Container dos Botões */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap; /* Permite que os botões quebrem linha se necessário */
+        }
+
+        a {
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: none;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: #000;
+            font-size: 14px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 800px) {
+            .container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                padding: 8px;
+            }
+
+            input[type="number"],
+            textarea {
+                padding: 6px;
+            }
+
+            button[type="submit"],
+            .back-button {
+                width: 100%;
+                margin: 5px 0 0 0;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Responder FACT - {{ fact.description }}</h1>
+            <form method="post" action="{% url 'respond_fact' fact.id %}">
+                {% csrf_token %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            {% for criterion in criteria %}
+                            <th>{{ criterion.name }}</th>
+                            {% endfor %}
+                            <th>Comentário</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.username }}</td>
+                            {% for criterion in criteria %}
+                            <td>
+                                <input type="number" name="score_{{ student.id }}_{{ criterion.id }}" min="0" max="100" required>
+                            </td>
+                            {% endfor %}
+                            <td>
+                                <textarea name="comment_{{ student.id }}"></textarea>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Botões Voltar e Enviar Avaliação lado a lado -->
+                <div class="button-container">
+                    <a href="{% url 'student_dashboard' %}" class="back-button">Voltar para o painel</a>
+                    <button type="submit">Enviar Avaliação</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

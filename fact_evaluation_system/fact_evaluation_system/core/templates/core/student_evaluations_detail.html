@@ -1,0 +1,173 @@
+<!-- core/templates/core/student_evaluations_detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avaliações de {{ student.username }} no FACT - {{ fact.description }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #FF6002;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #FF6002;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            table-layout: fixed;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #FF6002;
+            color: #FFFFFF;
+        }
+
+        /* Estilo para o comentário */
+        .comment {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #EFEEDB;
+            border-radius: 5px;
+        }
+
+        .back-button {
+            background-color: #FF6002;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+            margin-top: 20px;;
+        }
+
+        .back-button:hover {
+            color: #FDFCF3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: none;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: #000;
+            font-size: 14px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            table th, table td {
+                padding: 5px;
+            }
+
+            .back-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Avaliações de {{ student.username }} no FACT - {{ fact.description }}</h1>
+            {% for evaluator, data in evaluations_by_evaluator.items %}
+            <h2>Avaliador: {{ evaluator.username }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Critério</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evaluation in data.evaluations %}
+                    <tr>
+                        <td>{{ evaluation.criterion.name }}</td>
+                        <td>{{ evaluation.score }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="comment">
+                <p><strong>Comentário:</strong> {{ data.comment }}</p>
+            </div>
+            {% endfor %}
+            <a href="{% url 'fact_evaluations' fact.id %}" class="back-button">Voltar para os resultados do FACT</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

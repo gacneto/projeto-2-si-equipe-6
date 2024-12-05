@@ -1,0 +1,121 @@
+<!-- core/templates/core/home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FACT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            /* Centraliza o conteúdo verticalmente */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center; /* Centraliza o conteúdo */
+        }
+
+        h1 {
+            color: #FF6002;
+            margin-bottom: 40px;
+        }
+
+        /* Estilo dos links como botões */
+        .button {
+            background-color: #FF6002;
+            color: white;
+            padding: 15px 30px;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 10px;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            color: #FDFCF3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: none;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .button {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Bem-vindo ao Sistema de Avaliação FACT</h1>
+            <!-- Links de Login e Registrar como botões -->
+            <a href="{% url 'login' %}" class="button">Login</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

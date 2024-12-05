@@ -1,0 +1,152 @@
+<!-- core/templates/core/create_fact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Criar FACT</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        .container {
+            max-width: 600px; /* Largura máxima do "quadrado" */
+            margin: 50px auto; /* Centraliza horizontalmente e adiciona margem superior e inferior */
+            background-color: #FFFFFF; /* Fundo branco para destacar o conteúdo */
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave */
+            border-radius: 8px; /* Bordas arredondadas */
+        }
+
+        h1 {
+            color: #FF6002;
+            text-align: center;
+        }
+
+        label {
+            color: #FF6002;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #FF6002;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 10px;
+        }
+
+        button[type="submit"]:hover,
+        button[type="submit"]:active {
+            color: #FDFCF3;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        a:hover {
+            color: #FF6002;
+        }
+
+        /* Botão Voltar */
+        .back-button {
+            background-color: #FF6002;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 10px;
+            display: inline-block;
+
+        }
+
+        .back-button:hover {
+            color: #FDFCF3;
+        }
+
+        /* Centralização dos Botões */
+        .button-container {
+            text-align: center;
+            margin-top: 20px; /* Espaçamento superior opcional */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Criar FACT para {{ course.name }} - {{ course.period }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <p>
+                    <label for="description">Descrição:</label><br>
+                    <textarea name="description" id="description" required></textarea>
+                </p>
+                <p>
+                    <label for="deadline">Prazo:</label><br>
+                    <input type="datetime-local" name="deadline" id="deadline" required>
+                </p>
+                <p>
+                    <label>Critérios:</label><br>
+                    {% for criterion in criteria %}
+                    <input type="checkbox" name="criteria" value="{{ criterion.id }}"> {{ criterion.name }}<br>
+                    {% endfor %}
+                </p>
+                <!-- Botão Criar FACT Centralizado -->
+                <div class="button-container">
+                    <button type="submit">Criar FACT</button>
+                </div>
+            </form>
+            <!-- Botão Voltar Centralizado -->
+            <div class="button-container">
+                <a href="{% url 'professor_course_detail' course.id %}" class="back-button">Voltar</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

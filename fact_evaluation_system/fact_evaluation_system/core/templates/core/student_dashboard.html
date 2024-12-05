@@ -1,0 +1,204 @@
+<!-- core/templates/core/student_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Painel do Aluno</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FDFCF3;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            /* Configuração de flexbox para estruturar o layout */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: #333333;
+            height: 100px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 200px;
+            height: auto;
+        }
+
+        /* Conteúdo Principal */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #FF6002;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #FF6002;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        ul li {
+            background-color: #EFEEDB;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        ul li a {
+            background-color: #FF6002;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        ul li a:hover {
+            color: #FDFCF3;
+        }
+
+        /* Botão Sair */
+        .logout-button {
+            background-color: #FF6002;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .logout-button:hover {
+            color: #FDFCF3;
+        }
+
+        /* Centralização do Botão Sair */
+        .logout-container {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background-color: none;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: #000;
+            font-size: 14px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            ul li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            ul li a {
+                margin-top: 10px;
+            }
+
+            .logout-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Espaço para a Logo -->
+        <img src="logo.png" alt="Logo do Sistema" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <h1>Bem-vindo, {{ request.user.username }}</h1>
+
+            <h2>FACTs Ativos</h2>
+            <ul>
+                {% for fact in active_facts %}
+                <li>
+                    <div>
+                        <strong>{{ fact.description }}</strong><br>
+                        Prazo: {{ fact.deadline|date:"d/m/Y H:i" }}
+                    </div>
+                    <a href="{% url 'respond_fact' fact.id %}">Responder</a>
+                </li>
+                {% empty %}
+                <li>Não há FACTs ativos no momento.</li>
+                {% endfor %}
+            </ul>
+
+            <h2>Resultados dos FACTs Concluídos</h2>
+            <ul>
+                {% for fact, score in fact_scores.items %}
+                <li>
+                    <div>
+                        <strong>{{ fact.description }}</strong><br>
+                        Nota Final:
+                        {% if score != None %}
+                            {{ score|floatformat:2 }}
+                        {% else %}
+                            Nota Zero (Você não respondeu a este FACT)
+                        {% endif %}
+                    </div>
+                </li>
+                {% empty %}
+                <li>Não há FACTs concluídos no momento.</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Centralização do Botão Sair -->
+            <div class="logout-container">
+                <a href="{% url 'logout' %}" class="logout-button">Sair</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 InFact. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
