@@ -1,4 +1,5 @@
 <!-- core/templates/core/student_fact_detail.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
 
         /* Header */
         header {
-            background-color: #333333;
+            background-color: #000000;
             height: 100px;
             padding: 0 20px;
             display: flex;
@@ -142,7 +143,7 @@
 <body>
     <header>
         <!-- Espaço para a Logo -->
-        <img src="logo.png" alt="Logo do Sistema" class="logo">
+        <img src="{% static 'core/infactlogo.png' %}" alt="Logo do Sistema" class="logo">
     </header>
     <main>
         <div class="container">

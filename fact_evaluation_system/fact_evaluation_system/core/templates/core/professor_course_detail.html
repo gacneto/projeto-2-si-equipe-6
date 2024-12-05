@@ -1,4 +1,5 @@
 <!-- core/templates/core/professor_course_detail.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,7 +165,7 @@
 <body>
     <header>
         <!-- Espaço para a Logo -->
-        <img src="logo.png" alt="Logo do Sistema" class="logo">
+        <img src="{% static 'core/infactlogo.png' %}" alt="Logo do Sistema" class="logo">
     </header>
     <main>
         <div class="container">
